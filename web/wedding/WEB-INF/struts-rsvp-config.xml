@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+
+  <form-beans>
+
+    <!-- Login form bean -->
+    <form-bean name="loginForm"
+               type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="password" type="java.lang.String"/>
+    </form-bean>
+
+    <form-bean name="rsvpForm"
+               type="com.kristinaanderic.web.rsvp.RsvpForm" />
+
+  </form-beans>
+
+  <!-- =========== Global Forward Definitions ============================= -->
+
+  <global-forwards>
+
+    <!-- Default forward to "Welcome" action -->
+    <forward name="/welcome" path="/Welcome.do"/>
+    <forward name="/error" path="/StrutsError.jsp" />
+    <forward name="/timeout" path="/Timeout.do"/>
+
+  </global-forwards>
+
+
+  <!-- ========== Action Mapping Definitions ============================== -->
+  <action-mappings>
+
+    <action path="/login" forward="/Login.jsp" />
+    <action path="/respond" forward="/Respond.jsp"/>
+    <action path="/Welcome" forward="/Login.jsp" />
+
+    <action path="/Login"
+            type="com.kristinaanderic.web.rsvp.LoginAction"
+            name="loginForm"
+            scope="request"
+            validate="false">
+      <forward name="success" path="/EnterResponse.do" />
+      <forward name="failure" path="/login.do" />
+    </action>
+
+    <action path="/EnterResponse"
+            type="com.kristinaanderic.web.rsvp.EnterResponseAction"
+            name="rsvpForm"
+            scope="session"
+            validate="false">
+      <forward name="success" path="/Respond.jsp"/>
+      <forward name="timeout" path="/Timeout.do"/>
+    </action>
+
+    <action path="/Respond"
+            type="com.kristinaanderic.web.rsvp.RespondAction"
+            name="rsvpForm"
+            scope="session"
+            input="/Respond.jsp"
+            validate="true">
+       <forward name="success" path="/ConfirmRsvp.jsp"/>
+       <forward name="failure" path="/Respond.jsp"/>
+       <forward name="timeout" path="/Timeout.do"/>
+     </action>
+
+     <action path="/Confirm"
+             type="com.kristinaanderic.web.rsvp.ConfirmAction"
+             name="rsvpForm"
+             input="/ConfirmRsvp.jsp"
+             scope="session"
+             validate="true">
+       <forward name="success" path="/RsvpComplete.jsp"/>
+       <forward name="timeout" path="/Timeout.do"/>
+     </action>
+
+     <action path="/Timeout"
+             type="com.kristinaanderic.web.rsvp.TimeoutAction">
+       <forward name="success" path="/login.do"/>
+     </action>
+
+<!--
+    <action path="/EditGuestList" 
+            type="com.kristinaanderic.web.admin.EditGuestListAction">
+      <forward name="success" path="/editGuestList.do" />
+    </action>
+
+    <action path="/AddParty" 
+            type="com.kristinaanderic.web.admin.AddPartyAction"
+	    name="updatePartyForm"
+	    scope="request"
+	    validate="false">
+      <forward name="success" path="/editParty.do" />
+    </action>
+
+    <action path="/EditParty" 
+            type="com.kristinaanderic.web.admin.EditPartyAction"
+	    name="updatePartyForm"
+	    scope="request"
+	    validate="false">
+      <forward name="success" path="/editParty.do" />
+    </action>
+
+    <action path="/UpdateParty"
+            type="com.kristinaanderic.web.admin.UpdatePartyAction"
+	    name="updatePartyForm"
+	    input="/editParty.do"
+	    scope="request"
+            validate="true">
+      <forward name="success" path="/EditGuestList.do" />
+    </action>
+
+    <action path="/RemoveParty"
+            type="com.kristinaanderic.web.admin.RemovePartyAction">
+      <forward name="success" path="/PartyRemoved.jsp"/>
+    </action>
+
+    <action path="/PasswordList"
+            type="com.kristinaanderic.web.admin.PasswordListAction">
+      <forward name="success" path="/PasswordList.jsp"/>
+    </action>
+-->
+  </action-mappings>
+
+  <!-- ========== Controller Configuration ================================ -->
+
+  <controller>
+    <!-- The "input" parameter on "action" elements is the name of a
+         module-relative path rather than a local or global "forward" --> 
+    <set-property property="inputForward" value="false"/>
+  </controller>
+
+  <!-- ========== Message Resources Definitions =========================== -->
+
+  <message-resources
+    parameter="com.kristinaanderic.web.resources.ApplicationResources"
+    null="false" />
+
+  <!-- ========== Plug Ins Configuration ================================== -->
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property property="pathnames"
+                     value="/WEB-INF/validator-rules.xml,
+                            /WEB-INF/validation.xml"/>
+  </plug-in>
+
+</struts-config>

@@ -9,26 +9,19 @@ package com.kristinaanderic.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kristinaanderic.persistence.AbstractPersistable;
+
 /**
  * @author ewestfal
  *
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ContactInformation {
+public class ContactInformation extends AbstractPersistable {
 	
-	private Long id;
 	private Address address = new Address();
 	private List phoneNumbers = new ArrayList();
-		
-	public Long getId() {
-		return id;
-	}
-    
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
+			
 	public Address getAddress() {
 		return address;
 	}

@@ -1,0 +1,60 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+  <bean id="persistenceEngine" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="proxyInterfaces"><value>com.kristinaanderic.persistence.PersistenceEngine</value></property>
+    <property name="interceptorNames">
+      <value>persistenceTransactionInterceptor,persistenceEngineTarget</value>
+    </property>
+  </bean>
+
+  <bean id="persistenceEngineTarget" class="com.kristinaanderic.persistence.hibernate.HibernatePersistenceEngine">
+    <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+    <!--<property name="identifierGenerator"><ref bean="identifierGenerator"/></property>-->
+  </bean>
+
+  <bean id="persistenceTransactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+    <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <property name="transactionAttributeSource">
+      <value>
+        com.kristinaanderic.persistence.PersistenceEngine.save=PROPAGATION_REQUIRED
+        com.kristinaanderic.persistence.PersistenceEngine.load=PROPAGATION_REQUIRED
+        com.kristinaanderic.persistence.PersistenceEngine.delete=PROPAGATION_REQUIRED
+      </value>
+    </property>
+  </bean>
+
+  <!-- Hibernate SessionFactory -->
+  <bean id="sessionFactory"
+	    class="org.springframework.orm.hibernate.LocalSessionFactoryBean">
+    <property name="mappingResources">
+	  <list>
+        <value>com/kristinaanderic/guests/Party.hbm.xml</value>
+        <value>com/kristinaanderic/guests/Rsvp.hbm.xml</value>
+	<value>com/kristinaanderic/util/Address.hbm.xml</value>
+	<value>com/kristinaanderic/util/ContactInformation.hbm.xml</value>
+	<value>com/kristinaanderic/util/Name.hbm.xml</value>
+	<value>com/kristinaanderic/util/PhoneNumber.hbm.xml</value>
+  	  </list>
+	</property>
+	<property name="hibernateProperties">
+	  <props>
+		<prop key="hibernate.dialect">net.sf.hibernate.dialect.MySQLDialect</prop>
+		<prop key="hibernate.max_fetch_depth">2</prop>
+                <prop key="show_sql">true</prop>
+      </props>
+	</property>
+	<property name="dataSource">
+	  <ref bean="dataSource"/>
+	</property>
+  </bean>
+
+<!--
+  <bean id="identifierGenerator"
+        class="com.kristinaanderic.persistence.jdbc.JdbcIdentifierGenerator">
+    <property name="dataSource"><ref bean="dataSource"/></property>
+  </bean>
+-->
+
+</beans>

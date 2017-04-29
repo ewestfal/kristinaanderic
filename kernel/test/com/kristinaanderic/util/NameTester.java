@@ -6,9 +6,6 @@
  */
 package com.kristinaanderic.util;
 
-import net.sf.hibernate.Session;
-import net.sf.hibernate.Transaction;
-
 import com.kristinaanderic.test.Tester;
 
 /**
@@ -34,11 +31,7 @@ public class NameTester extends Tester {
 	}
 	
 	public void testPersistence() throws Exception {
-		Session session = currentSession();
-	    Transaction transaction = session.beginTransaction();
-		session.save(name);
-		transaction.commit();		
-		closeSession();	
+		name.save();
 	}
 	
 }

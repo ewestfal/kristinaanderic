@@ -3,16 +3,17 @@
     PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
 
-<hibernate-mapping package="com.kristinaanderic.util">
+<hibernate-mapping package="com.kristinaanderic.util" default-cascade="save-update">
 
-    <class name="Address" table="addresses">
-        <id name="id">
+    <class name="Address" table="Addresses">
+        <cache usage="read-write"/>
+        <id name="id" type="long">
             <generator class="native"/>
         </id>
         <property name="streetAddress1" type="string" />
         <property name="streetAddress2" type="string" />
         <property name="city" type="string" />
-        <property name="state" type="com.kristinaanderic.util.USState" />
+        <property name="state" type="com.kristinaanderic.persistence.hibernate.USStateType" />
         <property name="zipcode" type="string" />
     </class>
 

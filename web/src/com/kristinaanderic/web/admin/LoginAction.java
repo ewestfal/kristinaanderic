@@ -19,7 +19,7 @@ import com.kristinaanderic.web.WebConstants;
  * Implementation of <strong>Action</strong> that validates a user logon.
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.3 $ $Date: 2004/03/11 07:10:28 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/18 06:10:55 $
  */
 
 public final class LoginAction extends Action {
@@ -64,7 +64,7 @@ public final class LoginAction extends Action {
 		String password =
 			(String) PropertyUtils.getSimpleProperty(form, "password");
 		if (!username.equals(KRISANDERIC_USERNAME)) {
-			errors.add("username", new ActionError("username.error"));
+			errors.add("username", new ActionError("userName.error"));
 		}
 		if (!password.equals(KRISANDERIC_PASSWORD)) {
 			errors.add("password", new ActionError("password.error"));

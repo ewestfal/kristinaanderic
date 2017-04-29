@@ -3,17 +3,18 @@
     PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping package="com.kristinaanderic.util" default-cascade="save-update">
 
-    <class name="com.kristinaanderic.util.ContactInformation" table="contact_info">
-        <id name="id">
+    <class name="ContactInformation" table="ContactInformations">
+        <cache usage="read-write"/>
+        <id name="id" type="long">
             <generator class="native"/>
         </id>
         <many-to-one name="address" column="addressId" cascade="all" />
-        <list name="phoneNumbers" table="contact_info_phone_rel" cascade="all">
+        <list name="phoneNumbers" table="ContactInfoPhoneRel" cascade="all">
           <key column="contactInfoId" />
           <index column="idx" type="integer" />
-          <many-to-many column="phoneNumberId" class="com.kristinaanderic.util.PhoneNumber" />
+          <many-to-many column="phoneNumberId" class="PhoneNumber" />
         </list>
     </class>
 

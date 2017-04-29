@@ -6,6 +6,21 @@
 
 <web-app>
 
+  <filter>
+    <filter-name>HibernateSessionFilter</filter-name>
+    <filter-class>com.kristinaanderic.web.filters.OpenSessionInViewFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>HibernateSessionFilter</filter-name>
+    <url-pattern>/admin/*.jsp</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>HibernateSessionFilter</filter-name>
+    <servlet-name>action</servlet-name>
+  </filter-mapping>
+
   <!-- Action Servlet Configuration -->
   <servlet>
     <servlet-name>action</servlet-name>
@@ -13,6 +28,10 @@
     <init-param>
       <param-name>config/admin</param-name>
       <param-value>/WEB-INF/struts-admin-config.xml</param-value>
+    </init-param>
+    <init-param>
+      <param-name>config/rsvp</param-name>
+      <param-value>/WEB-INF/struts-rsvp-config.xml</param-value>
     </init-param>
     <init-param>
       <param-name>debug</param-name>
@@ -35,6 +54,10 @@
     <servlet-name>invoker</servlet-name>
     <url-pattern>/servlet/*</url-pattern>
   </servlet-mapping>
+
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
 
   <!-- Struts Tag Library Descriptors -->
   <taglib>

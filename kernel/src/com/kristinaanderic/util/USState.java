@@ -1,17 +1,13 @@
 package com.kristinaanderic.util;
 
-import net.sf.hibernate.PersistentEnum;
-
 /**
  * A typesafe enumeration for US states, including state names
  * and abbreviations.
  * 
  * @author Eric Westfall
  */
-public class USState implements PersistentEnum {
+public class USState implements java.io.Serializable {
 
-	public static USState NONE = new USState("", "");
-    
     public static USState AL = new USState("ALABAMA", "AL");
     public static USState AK = new USState("ALASKA", "AK");
     public static USState AS = new USState("AMERICAN SAMOA", "AS");
@@ -91,6 +87,10 @@ public class USState implements PersistentEnum {
     public String getName() {
         return this.name;
     }
+    
+    public String getValue() {
+    	return getAbbreviation();
+    }
 	
     public String getAbbreviation() {
         return abbreviation;
@@ -99,30 +99,16 @@ public class USState implements PersistentEnum {
     public String toString() {
         return name;
     }
-    
-    public int toInt() {
-    	for (int index = 0; index < STATES.length; index++) {
-    		if (STATES[index] == this) {
-    			return index;
-    		}
-    	}
-    	return -1;
-    }
-    
-    public static PersistentEnum fromInt(int value) {
-    	if (value == -1 || value >= STATES.length) return USState.NONE;
-    	return STATES[value];
-    }
 	
     public static USState fromValue(String value) {
-    	if (value == null || value.equals("")) return NONE;
+    	if (value == null || value.equals("")) return null;
     	for (int index = 0; index < STATES.length; index++) {
     		USState state = STATES[index];
     		if (value.equals(state.getName()) || value.equals(state.getAbbreviation())) {
     			return state;
     		}
     	}
-    	return NONE;
+    	return null;
     }
     
 }

@@ -17,8 +17,11 @@ public class WebConstants {
 	public static final String SUCCESS_FORWARD = "success";
 	public static final String FAILURE_FORWARD = "failure";
 	public static final String ERROR_FORWARD = "error";
+	public static final String TIMEOUT_FORWARD = "timeout";
 	
 	public static final String CREATE_MODE = "create";
 	public static final String EDIT_MODE = "edit";
+	
+	public static final String OPENED_PARTY = "openedPartyId";
 	
 }

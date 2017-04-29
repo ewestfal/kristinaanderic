@@ -1,38 +1,20 @@
 package com.kristinaanderic.web.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.kristinaanderic.datastore.DaoUtils;
 import com.kristinaanderic.web.WebConstants;
 
-/**
- * Implementation of <strong>Action</strong> that validates a user logon.
- *
- * @author Craig R. McClanahan
- * @version $Revision: 1.1 $ $Date: 2004/03/13 05:37:44 $
- */
-
 public final class EditGuestListAction extends Action {
-
-	// ----------------------------------------------------- Instance Variables
-
-	/**
-	 * The <code>Log</code> instance for this application.
-	 */
-	private Log log = LogFactory.getLog(this.getClass().getName());
-
-	// --------------------------------------------------------- Public Methods
 
 	/**
 	 * Process the specified HTTP request, and create the corresponding HTTP
@@ -54,9 +36,9 @@ public final class EditGuestListAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+		
 		ActionErrors errors = new ActionErrors();
-		List parties = new ArrayList();
+		List parties = DaoUtils.getPartyDao().findAll();
 
 		if (!errors.isEmpty()) {
 			saveErrors(request, errors);

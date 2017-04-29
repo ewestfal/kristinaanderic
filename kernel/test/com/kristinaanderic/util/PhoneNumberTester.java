@@ -6,9 +6,6 @@
  */
 package com.kristinaanderic.util;
 
-import net.sf.hibernate.Session;
-import net.sf.hibernate.Transaction;
-
 import com.kristinaanderic.test.Tester;
 
 /**
@@ -34,79 +31,56 @@ public class PhoneNumberTester extends Tester {
 	}
 	
 	public void testConstructors() throws Exception {
-		Session session = currentSession();
-		Transaction transaction = session.beginTransaction();
-		session.save(phoneNumber);
-		transaction.commit();
+		phoneNumber.save();
 		assertEquals(phoneNumber.getAreaCode(), areaCode);
 		assertEquals(phoneNumber.getPrefix(), prefix);
 		assertEquals(phoneNumber.getPostfix(), postfix);
 		assertEquals(phoneNumber.getExtension(), "");
-		assertEquals(phoneNumber.getType(), PhoneNumberType.UNKNOWN);
+		assertEquals(phoneNumber.getType(), PhoneNumberType.OTHER);
 		
 		PhoneNumber number2 = new PhoneNumber();
-		transaction = session.beginTransaction();
-		session.save(number2);
-		transaction.commit();
+		number2.save();
 		number2.setAreaCode("111");
 		number2.setPrefix("111");
 		number2.setPostfix("1111");
 		number2.setExtension("123");
 		number2.setType(PhoneNumberType.MOBILE);
-		transaction = session.beginTransaction();
-		session.save(number2);
-		transaction.commit();
-		closeSession();
+		number2.save();
 	}
 	
 	public void testAreaCode() throws Exception {
 		assertEquals(phoneNumber.getAreaCode(), areaCode);
-		Session session = currentSession();
-		Transaction transaction = session.beginTransaction();
 		phoneNumber.setAreaCode("321");
-		session.save(phoneNumber);
+		phoneNumber.save();
 		assertEquals(phoneNumber.getAreaCode(), "321");
-		closeSession();
 	}
 	
 	public void testPrefix() throws Exception {
 		assertEquals(phoneNumber.getPrefix(), prefix);
-		Session session = currentSession();
-		Transaction transaction = session.beginTransaction();
 		phoneNumber.setPrefix("767");
-		session.save(phoneNumber);
+		phoneNumber.save();
 		assertEquals(phoneNumber.getPrefix(), "767");
-		closeSession();
 	}
 	
 	public void testPostfix() throws Exception {
 		assertEquals(phoneNumber.getPostfix(), postfix);
-		Session session = currentSession();
-		Transaction transaction = session.beginTransaction();
 		phoneNumber.setPostfix("5321");
-		session.save(phoneNumber);
+		phoneNumber.save();
 		assertEquals(phoneNumber.getPostfix(), "5321");
-		closeSession();
 	}
 	
 	public void testExtension() throws Exception {
 		assertEquals(phoneNumber.getExtension(), "");
-		Session session = currentSession();
-		Transaction transaction = session.beginTransaction();
 		phoneNumber.setExtension("abcdefg");
-		session.save(phoneNumber);
+		phoneNumber.save();
 		assertEquals(phoneNumber.getExtension(), "abcdefg");
-		closeSession();
 	}
 
 	public void testType() throws Exception {
-		assertEquals(phoneNumber.getType(), PhoneNumberType.UNKNOWN);
-		Session session = currentSession();
-		Transaction transaction = session.beginTransaction();
+		assertEquals(phoneNumber.getType(), PhoneNumberType.OTHER);
 		phoneNumber.setType(PhoneNumberType.WORK);
-		session.save(phoneNumber);
+		phoneNumber.save();
 		assertEquals(phoneNumber.getType(), PhoneNumberType.WORK);
-		closeSession();
 	}
 
 }

@@ -1,26 +1,22 @@
 package com.kristinaanderic.guests;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.kristinaanderic.persistence.AbstractPersistable;
 
 /**
  * Represents a response to an invitation.
  * 
  * @author Eric Westfall
  */
-public class Rsvp {
+public class Rsvp extends AbstractPersistable {
 
-	private Long id;
 	private boolean isAttending = false;
-	private int numberAttending = 0;
-	private Date responseDate = new Date();
-	
-	public Long getId() {
-		return this.id;
-	}
-	
-	private void setId(Long id) {
-		this.id = id;
-	}
+	private Set attendingRespondants = new HashSet();
+    private Date responseDate;
+    private String comments = "";
 	
 	public boolean isAttending() {
 		return this.isAttending;
@@ -30,14 +26,18 @@ public class Rsvp {
 		this.isAttending = isAttending;
 	}
 	
-	public int getNumberAttending() {
-		return this.numberAttending;
+	public Set getAttendingRespondants() {
+		return attendingRespondants;
 	}
 	
-	public void setNumberAttending(int numberAttending) {
-		this.numberAttending = numberAttending;
+	private void setAttendingRespondants(Set attendingRespondants) {
+		this.attendingRespondants = attendingRespondants;
 	}
-
+	
+	public int getNumberAttending() {
+		return attendingRespondants.size();
+	}
+		
 	public Date getResponseDate() {
 		return this.responseDate;
 	}
@@ -46,4 +46,16 @@ public class Rsvp {
 		this.responseDate = responseDate;
 	}
 	
+	public boolean hasResponded() {
+		return getResponseDate() != null;
+	}
+	
+    public String getComments() {
+        return comments;
+    }
+    
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
 }

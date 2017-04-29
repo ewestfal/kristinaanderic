@@ -3,6 +3,7 @@ package com.kristinaanderic.guests;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kristinaanderic.persistence.AbstractPersistable;
 import com.kristinaanderic.util.ContactInformation;
 import com.kristinaanderic.util.Name;
 
@@ -12,28 +13,21 @@ import com.kristinaanderic.util.Name;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class Party {
+public class Party extends AbstractPersistable {
 	
-	private Long id;
 	private String partyName;
-    private List names = new ArrayList();
+	private String password;
+    //private List names = new ArrayList();
     private Rsvp rsvp = new Rsvp();
     private ContactInformation contactInformation = new ContactInformation();
      
-    private Party() {}
+    protected Party() {}
     
     public Party(String partyName) {
     	setPartyName(partyName);
+    	//names = new ArrayList();
     }
         
-    public Long getId() {
-    	return id;
-    }
-    
-    public void setId(Long id) {
-    	this.id = id;
-    }
-    
     public String getPartyName() {
     	return this.partyName;
     }
@@ -42,6 +36,14 @@ public class Party {
     	this.partyName = partyName;
     }
     
+    public String getPassword() {
+    	return this.password;
+    }
+    
+    public void setPassword(String password) {
+    	this.password = password;
+    }
+    /*
     public void addName(Name name) {
         names.add(name);
     }
@@ -55,12 +57,13 @@ public class Party {
     }
     
     private void setNames(List names) {
+    	System.out.println("setting names: " + names.size()+","+names.getClass());
     	this.names = names;
     }
 
     public int getSize() {
         return names.size();
-    }
+        }*/
     
     public ContactInformation getContactInformation() {
     	return contactInformation;	
@@ -77,5 +80,5 @@ public class Party {
     public void setRsvp(Rsvp rsvp) {
     	this.rsvp = rsvp;
     }
-
+    
 }

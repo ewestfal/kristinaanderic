@@ -1,32 +1,26 @@
-/*
- * Created on Feb 10, 2004
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package com.kristinaanderic.util;
 
-import net.sf.hibernate.PersistentEnum;
-
 /**
- * FIXME: implement this sucker
+ * A typesafe enumeration for the type of a PhoneNumber
  * 
- * @author ewestfal
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author Eric Westfall
+ * @created Aug 19, 2004
  */
-public class PhoneNumberType implements PersistentEnum {
+public class PhoneNumberType implements java.io.Serializable {
+	
+	private static final String HOME_VALUE = "home";
+	private static final String MOBILE_VALUE = "mobile";
+	private static final String OTHER_VALUE = "other";
+	private static final String WORK_VALUE = "work";
 
-	public static final PhoneNumberType HOME = new PhoneNumberType("home");
-	public static final PhoneNumberType WORK = new PhoneNumberType("work");
-	public static final PhoneNumberType MOBILE = new PhoneNumberType("mobile");
-	public static final PhoneNumberType OTHER = new PhoneNumberType("other");
-	public static final PhoneNumberType UNKNOWN = new PhoneNumberType("unknown");
+	public static final PhoneNumberType HOME = new PhoneNumberType(HOME_VALUE);
+	public static final PhoneNumberType MOBILE = new PhoneNumberType(MOBILE_VALUE);
+	public static final PhoneNumberType OTHER = new PhoneNumberType(OTHER_VALUE);
+	public static final PhoneNumberType WORK = new PhoneNumberType(WORK_VALUE);
 
 	public static final PhoneNumberType[] TYPES =
 		{
-			HOME, WORK, MOBILE, OTHER, UNKNOWN
+		HOME, WORK, MOBILE, OTHER
 		};
 		
 	private final String value;
@@ -35,16 +29,15 @@ public class PhoneNumberType implements PersistentEnum {
 		this.value = value;
 	}
 
-	public int toInt() {
-		for (int index = 0; index < TYPES.length; index++) {
-			if (TYPES[index] == this) return index;
-		}
-		return -1;
+	public String getValue() {
+		return value;
 	}
 	
-	public static PersistentEnum fromInt(int value) {
-		if (value < 0 || value >= TYPES.length) return null;
-		return TYPES[value];
+	public static PhoneNumberType fromValue(String value) {
+		for (int index = 0; index < TYPES.length; index++) {
+			if (TYPES[index].getValue().equals(value)) return TYPES[index];
+		}
+		return null;
 	}
 	
 }

@@ -14,6 +14,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.kristinaanderic.core.Kernel;
+import com.kristinaanderic.guests.Party;
 import com.kristinaanderic.web.WebConstants;
 
 /**
@@ -33,10 +35,14 @@ public class EditPartyAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			String partyId = request.getParameter("partyId");
+			Party party = (Party)Kernel.getCore().getPersistenceEngine().load(new Long(partyId), Party.class);
+			if (party == null) throw new Exception("Invalid party id");
 			UpdatePartyForm updateForm = (UpdatePartyForm)form;
 			updateForm.setMode(WebConstants.EDIT_MODE);
-			// FIXME: prepopulate form data here
+			updateForm.populate(party);
+			request.getSession().setAttribute(WebConstants.OPENED_PARTY, party.getId());
 			return mapping.findForward(WebConstants.SUCCESS_FORWARD);
 	}
-
+	
 }

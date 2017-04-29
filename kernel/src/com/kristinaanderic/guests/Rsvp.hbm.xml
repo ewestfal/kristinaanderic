@@ -3,15 +3,23 @@
     PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping package="com.kristinaanderic.guests" default-cascade="save-update">
 
-    <class name="com.kristinaanderic.guests.Rsvp" table="rsvps">        
-        <id name="id">
+    <class name="Rsvp" table="Rsvps">
+        <cache usage="read-write"/>
+        <id name="id" type="long">
             <generator class="native"/>
         </id>
         <property name="attending" type="boolean" />
-        <property name="numberAttending" type="integer" />
         <property name="responseDate" type="timestamp" />
+        <property name="comments" type="string"/>
+	<set name="attendingRespondants" table="RsvpRespondantRel">
+	  <key column="rsvpId"/>
+	  <composite-element class="com.kristinaanderic.guests.Respondant">
+	    <many-to-one name="name" column="nameId" class="com.kristinaanderic.util.Name"/>
+	    <property name="food" type="com.kristinaanderic.persistence.hibernate.FoodType"/>
+	  </composite-element>
+	</set>
     </class>
 
 </hibernate-mapping>

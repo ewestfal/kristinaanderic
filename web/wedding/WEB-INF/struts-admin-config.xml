@@ -15,6 +15,9 @@
       <form-property name="password" type="java.lang.String"/>
     </form-bean>
 
+    <form-bean name="updatePartyForm"
+               type="com.kristinaanderic.web.admin.UpdatePartyForm" />
+
   </form-beans>
 
   <!-- =========== Global Forward Definitions ============================= -->
@@ -33,7 +36,6 @@
 
     <action path="/login" forward="/Login.jsp" />
     <action path="/editGuestList" forward="/EditGuestList.jsp" />
-    <action path="/addParty" forward="/EditParty.jsp" />
     <action path="/editParty" forward="/EditParty.jsp" />
 
     <action path="/Welcome" forward="/Login.jsp" />
@@ -52,154 +54,49 @@
       <forward name="success" path="/editGuestList.do" />
     </action>
 
-    <action path="/AddParty" forward="/addParty.do" />
-    <action path="/EditParty" forward="/editParty.do" />
-
-    <action path="/UpdateParty" forward="/../comingsoon.jsp" />
-            
-<!--
-    <action path="/ManageMessages"
-            type="com.lifetree.web.administrator.ManageMessagesAction">
-      <forward name="success" path="/administrator/ManageMessages.jsp" />
-    </action>
-    
-    <action path="/MarkMessageRead"
-            type="com.lifetree.web.administrator.MarkMessageReadAction">
-       <forward name="success" path="/ManageMessages.do" />
+    <action path="/AddParty" 
+            type="com.kristinaanderic.web.admin.AddPartyAction"
+	    name="updatePartyForm"
+	    scope="request"
+	    validate="false">
+      <forward name="success" path="/editParty.do" />
     </action>
 
-    <action path="/ManagePersistableLocks"
-            type="com.lifetree.web.administrator.ManagePersistableLocksAction">
-       <forward name="success" path="/administrator/ManagePersistableLocks.jsp" />
+    <action path="/EditParty" 
+            type="com.kristinaanderic.web.admin.EditPartyAction"
+	    name="updatePartyForm"
+	    scope="request"
+	    validate="false">
+      <forward name="success" path="/editParty.do" />
     </action>
 
-    <action path="/ReleasePersistableLock"
-            type="com.lifetree.web.administrator.ReleasePersistableLockAction">
-      <forward name="success" path="/ManagePersistableLocks.do" />
-    </action>
-
-    <action path="/ManagePharmacies"
-            type="com.lifetree.web.administrator.ManagePharmaciesAction">
-      <forward name="success" path="/administrator/ManagePharmacies.jsp" />
-    </action>
-
-    <action path="/AddPharmacy"
-            type="com.lifetree.web.administrator.AddPharmacyAction">
-      <forward name="success" path="/administrator/EditPharmacy.jsp" />
-    </action>
-
-    <action path="/EditPharmacy"
-            type="com.lifetree.web.administrator.EditPharmacyAction">
-      <forward name="success" path="/administrator/EditPharmacy.jsp" />
-    </action>
-
-
-    <action path="/UpdatePharmacy"
-            type="com.lifetree.web.administrator.UpdatePharmacyAction"
-            name="pharmacyForm"
-            scope="request"
-            input="/administrator/EditPharmacy.jsp"
+    <action path="/UpdateParty"
+            type="com.kristinaanderic.web.admin.UpdatePartyAction"
+	    name="updatePartyForm"
+	    input="/editParty.do"
+	    scope="request"
             validate="true">
-      <forward name="success" path="/ManagePharmacies.do" />
+      <forward name="success" path="/EditGuestList.do" />
     </action>
 
-    <action path="/ManageLifeTreeStaff"
-            type="com.lifetree.web.administrator.ManageLifeTreeStaffAction">
-      <forward name="success" path="/administrator/ManageLifeTreeStaff.jsp" />
+    <action path="/RemoveParty"
+            type="com.kristinaanderic.web.admin.RemovePartyAction">
+      <forward name="success" path="/PartyRemoved.jsp"/>
     </action>
 
-    <action path="/AddLifeTreeStaff"
-            type="com.lifetree.web.administrator.AddLifeTreeStaffAction">
-      <forward name="success" path="/administrator/EditLifeTreeStaff.jsp" />
+    <action path="/PasswordList"
+            type="com.kristinaanderic.web.admin.PasswordListAction">
+      <forward name="success" path="/PasswordList.jsp"/>
     </action>
 
-    <action path="/EditLifeTreeStaff"
-            type="com.lifetree.web.administrator.EditLifeTreeStaffAction">
-      <forward name="success" path="/administrator/EditLifeTreeStaff.jsp" />
-    </action>
-
-    <action path="/UpdateLifeTreeStaff"
-            type="com.lifetree.web.administrator.UpdateLifeTreeStaffAction"
-            name="lifeTreeStaffForm"
-            scope="request"
-            input="/administrator/EditLifeTreeStaff.jsp"
-            validate="true">
-      <forward name="success" path="/ManageLifeTreeStaff.do" />
-    </action>
-
-
-    <action path='/SubmitAddPatient'
-            type='com.lifetree.web.administrator.SubmitAddPatientAction'
-            name='addPatientForm'
-            scope='request'
-            input='/administrator/AddPatient.jsp'
-            validate='true'>
-      <forward name='success' path='/administrator/AddPatient.jsp' />
-    </action>
-
-    <action path="/EditPractices"
-            type="com.lifetree.web.administrator.EditPracticesAction">
-      <forward name="success" path="/administrator/EditPractices.jsp" />
-    </action>
-
-    <action path="/OpenPractice"
-            type="com.lifetree.web.administrator.OpenPracticeAction"
-            name="openPracticeForm"
-            scope="request"
-            input="/administrator/EditPractices.jsp"
-            validate="true">
-      <forward name="success" path="/administrator/DisplayPractice.jsp" />
-    </action>
-
-    <action path="/EditPracticeInformation"
-            type="com.lifetree.web.administrator.EditPracticeInformationAction"
-            name="editPracticeForm"
-            scope="request"
-            input="/administrator/DisplayPractice.jsp"
-            validate="true" >
-       <forward name="success" path="/administrator/EditPractice.jsp" />
-    </action>
-
-    <action path="/CreatePractice"
-            type="com.lifetree.web.administrator.CreatePracticeAction" >
-      <forward name="success" path="/administrator/EditPractice.jsp" />
-    </action>
-
-    <action path="/UpdatePracticeInformation"
-            type="com.lifetree.web.administrator.UpdatePracticeInformationAction"
-            name="practiceInformationForm"
-            scope="request"
-            input="/administrator/EditPractice.jsp"
-            validate="true">
-      <forward name="success" path="/administrator/DisplayPractice.jsp" />
-    </action>
-
-    <action path="/EditPracticeAdministrator"
-            type="com.lifetree.web.administrator.EditPracticeAdministratorAction"
-            name="editPracticeAdministratorForm"
-            scope="request"
-            input="/administrator/DisplayPractice.jsp"
-            validate="true" >
-       <forward name="success" path="/administrator/EditPracticeAdministrator.jsp" />
-    </action>
-
-    <action path="/UpdatePracticeAdministrator"
-            type="com.lifetree.web.administrator.UpdatePracticeAdministratorAction"
-            name="practiceAdministratorForm"
-            scope="request"
-            input="/administrator/EditPracticeAdministrator.jsp"
-            validate="true">
-      <forward name="success" path="/administrator/DisplayPractice.jsp" />
-    </action>
--->
   </action-mappings>
 
   <!-- ========== Controller Configuration ================================ -->
 
   <controller>
     <!-- The "input" parameter on "action" elements is the name of a
-         local or global "forward" rather than a module-relative path --> 
-    <set-property property="inputForward" value="true"/>
+         module-relative path rather than a local or global "forward" --> 
+    <set-property property="inputForward" value="false"/>
   </controller>
 
   <!-- ========== Message Resources Definitions =========================== -->

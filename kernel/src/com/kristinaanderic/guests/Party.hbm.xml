@@ -3,21 +3,32 @@
     PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping package="com.kristinaanderic.guests" default-cascade="save-update">
 
-    <class name="com.kristinaanderic.guests.Party" table="parties">        
-        <id name="id">
+    <class name="Party" table="Parties">
+        <cache usage="read-write"/>
+        <id name="id" type="long">
             <generator class="native"/>
         </id>
         <property name="partyName" type="string" />
+        <property name="password" type="string" />
         <many-to-one name="contactInformation" column="contactInformationId" 
-        	cascade="all" />
-        <many-to-one name="rsvp" column="rsvpId" cascade="all" />
-        <list name="names" table="party_name_rel" cascade="all">
+        	class="com.kristinaanderic.util.ContactInformation" cascade="all" />
+        <many-to-one name="rsvp" column="rsvpId" class="Rsvp" cascade="all" />
+<!--        <list name="names" table="PartyNameRel" cascade="all">
           <key column="partyId" />
           <index column="idx" type="integer" />
           <many-to-many column="nameId" class="com.kristinaanderic.util.Name" />
         </list>
+-->
     </class>
+
+    <query name="Party.all">
+        from Party
+    </query>
+    
+    <query name="Party.by.password">
+    	from Party P where P.password=:password
+    </query>
 
 </hibernate-mapping>

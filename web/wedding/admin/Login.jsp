@@ -2,7 +2,7 @@
 <%@ taglib uri="/tags/struts-bean" prefix="bean" %>
 <%@ taglib uri="/tags/struts-html" prefix="html" %>
 
-<jsp:include page="../header.jsp" />
+<jsp:include page="../noCacheHeader.jsp" />
 
 <html:form action="/Login" focus="username">
            <!-- onsubmit="return validateLoginForm(this);"> -->

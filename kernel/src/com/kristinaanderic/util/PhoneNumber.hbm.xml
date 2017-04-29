@@ -3,17 +3,18 @@
     PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping package="com.kristinaanderic.util" default-cascade="save-update">
 
-    <class name="com.kristinaanderic.util.PhoneNumber" table="phoneNumbers">
-        <id name="id">
+    <class name="com.kristinaanderic.util.PhoneNumber" table="PhoneNumbers">
+        <cache usage="read-write"/>
+        <id name="id" type="long">
             <generator class="native"/>
         </id>
         <property name="areaCode" type="string" />
         <property name="prefix" type="string" />
         <property name="postfix" type="string" />
         <property name="extension" type="string" />
-        <property name="type" type="com.kristinaanderic.util.PhoneNumberType" />
+        <property name="type" type="com.kristinaanderic.persistence.hibernate.PhoneNumberTypeType"/>
     </class>
 
 </hibernate-mapping>

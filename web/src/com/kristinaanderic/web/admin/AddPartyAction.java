@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.kristinaanderic.util.USState;
 import com.kristinaanderic.web.WebConstants;
 
 /**
@@ -24,7 +23,7 @@ import com.kristinaanderic.web.WebConstants;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class AddPartyAction extends Action {
-
+	
 	/* (non-Javadoc)
 	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -36,7 +35,8 @@ public class AddPartyAction extends Action {
 		throws Exception {
 			UpdatePartyForm updateForm = (UpdatePartyForm)form;
 			updateForm.setMode(WebConstants.CREATE_MODE);
-			updateForm.setState(USState.IN.getAbbreviation());
+			//updateForm.setState(USState.IN.getAbbreviation());
+			request.getSession().setAttribute(WebConstants.OPENED_PARTY, null);
 			return mapping.findForward(WebConstants.SUCCESS_FORWARD);
 	}
 

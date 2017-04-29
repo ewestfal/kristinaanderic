@@ -6,28 +6,21 @@
  */
 package com.kristinaanderic.util;
 
+import com.kristinaanderic.persistence.AbstractPersistable;
+
 /**
  * @author ewestfal
  *
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class Address {
+public class Address extends AbstractPersistable {
     
-    private Long id;
     private String streetAddress1 = "";
     private String streetAddress2 = "";
     private String city = "";
-    private USState state = USState.NONE;
+    private USState state = null;
     private String zipcode = "";
-
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     public String getStreetAddress1() {
         return streetAddress1;

@@ -1,11 +1,15 @@
 package com.kristinaanderic.util;
 
-public class Name {
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import com.kristinaanderic.persistence.AbstractPersistable;
+
+public class Name extends AbstractPersistable {
 
     private String firstName;
     private String middleName;
     private String lastName;
-    private Long id;
 
 	public Name() {
 		this("", "", "");
@@ -24,15 +28,6 @@ public class Name {
         setLastName(lastName);
     }
 
-	public Long getId() {
-		return id;
-	}
-    
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
     /**
      * Gets the value of firstName
      *
@@ -48,9 +43,6 @@ public class Name {
      * @param argFirstName Value to assign to this.firstName
      */
     public void setFirstName(String argFirstName) {
-        if (argFirstName == null || argFirstName.length() < 1) {
-            throw new IllegalArgumentException("First name must be one character or longer.");
-        }
         this.firstName = argFirstName;
     }
 
@@ -87,19 +79,34 @@ public class Name {
      * @param argLastName Value to assign to this.lastName
      */
     public void setLastName(String argLastName) {
-        if (argLastName == null || argLastName.length() < 1) {
-            throw new IllegalArgumentException("Last name must be one character or longer.");
-        }
         this.lastName = argLastName;
     }
 
     public String toString() {
         String middleNameString = getMiddleName();
-        if (middleNameString == null) {
-            middleNameString = "";
+        if (middleNameString == null || middleNameString.equals("")) {
+            middleNameString = " ";
         }
-        middleNameString = " "+middleNameString+" ";
+        if (!middleNameString.equals(" ")) {
+            middleNameString = " "+middleNameString+" ";
+        }
         return getFirstName()+middleNameString+getLastName();
+    }
+    
+    public boolean equals(Object object) {
+    	boolean isEquals = false;
+    	if (object instanceof Name) {
+    		Name name = (Name)object;
+    		isEquals = new EqualsBuilder().append(firstName, name.getFirstName()).
+				append(middleName, name.getMiddleName()).
+				append(lastName, name.getLastName()).isEquals();
+    	}
+    	return isEquals; 
+    }
+    
+    public int hashCode() {
+    	return new HashCodeBuilder().append(firstName).
+			append(middleName).append(lastName).hashCode();
     }
     
 }

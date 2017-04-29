@@ -3,17 +3,15 @@
 <%@ taglib uri="/tags/struts-html" prefix="html" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
-<jsp:include page="../header.jsp" />
+<jsp:include page="../noCacheHeader.jsp" />
 
 <p>
   <html:link action="/AddParty.do">Add Parties</html:link>
 </p>
 <p>  
-  <c:forEach var="party" items="${parties}">
-    <c:forEach var="name" varStatus="status" items="${party.names}">
-      <c:out value="${name}" />
-      <c:if test="${!status.last}">, </c:if>  
-    </c:forEach>
+  <c:forEach var="party" items="${requestScope.parties}">
+    <c:set var="partyId" value="${party.id}"/>
+    <html:link action="/EditParty.do" paramId="partyId" paramName="partyId"><c:out value="${party.partyName}"/></html:link>
     <br>
   </c:forEach>
 </p>

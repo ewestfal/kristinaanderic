@@ -3,10 +3,11 @@
     PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
 
-<hibernate-mapping package="com.kristinaanderic.util">
+<hibernate-mapping package="com.kristinaanderic.util" default-cascade="save-update">
 
-    <class name="Name" table="names">
-        <id name="id">
+    <class name="Name" table="Names">
+        <cache usage="read-write"/>
+        <id name="id" type="long">
             <generator class="native"/>
         </id>
         <property name="firstName" type="string" />

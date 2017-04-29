@@ -6,36 +6,31 @@
  */
 package com.kristinaanderic.util;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import com.kristinaanderic.persistence.AbstractPersistable;
+
 /**
  * @author ewestfal
  *
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class PhoneNumber {
+public class PhoneNumber extends AbstractPersistable {
 
-	private Long id;
 	private String areaCode = "";
 	private String prefix = "";
 	private String postfix = "";
 	private String extension = "";
-	private PhoneNumberType type = PhoneNumberType.UNKNOWN;
+	private PhoneNumberType type = PhoneNumberType.OTHER;
 	
-	public PhoneNumber() {
-	}
+	protected PhoneNumber() {}
 	
 	public PhoneNumber(String areaCode, String prefix, String postfix) {
 		this.areaCode = areaCode;
 		this.prefix = prefix;
 		this.postfix = postfix;
-	}
-	
-	public Long getId() {
-		return this.id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
 	}
 	
 	public String getAreaCode() {
@@ -76,6 +71,29 @@ public class PhoneNumber {
 	
 	public void setType(PhoneNumberType type) {
 		this.type = type;
+	}
+	
+	public boolean equals(Object object) {
+		boolean isEquals = false;
+		if (object instanceof PhoneNumber) {
+			PhoneNumber number = (PhoneNumber)object;
+			isEquals = new EqualsBuilder().append(areaCode, number.getAreaCode()).
+				append(prefix, number.getPrefix()).
+				append(postfix, number.getPostfix()).
+				append(extension, number.getExtension()).
+				append(type, number.getType()).isEquals();
+		}
+		return isEquals;
+	}
+	
+	public int hashCode() {
+		return new HashCodeBuilder().append(areaCode).
+			append(prefix).append(postfix).
+			append(extension).append(type).hashCode();
+	}
+	
+	public String toString() {
+		return getAreaCode()+"-"+getPrefix()+"-"+getPostfix();
 	}
 
 }

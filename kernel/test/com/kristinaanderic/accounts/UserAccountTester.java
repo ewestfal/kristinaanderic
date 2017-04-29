@@ -11,7 +11,7 @@ import com.kristinaanderic.test.Tester;
  */
 public class UserAccountTester extends Tester {
 
-	private UserAccount userAccount;
+	private PartyAccount userAccount;
 	
 	public UserAccountTester(String name) {
 		super(name);
@@ -19,7 +19,7 @@ public class UserAccountTester extends Tester {
 	
 	public void setUp() throws Exception {
 		super.setUp();
-		userAccount = new UserAccount("userName", "password", new Party());
+		userAccount = new PartyAccount("userName", "password", new Party("partyName"));
 	}
 	
 	public void testPersistence() throws Exception {

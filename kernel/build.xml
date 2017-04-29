@@ -3,8 +3,11 @@
   <property file="../build.properties" />
 
   <path id="class.path">
+    <pathelement location="test/conf"/>
+    <pathelement location="conf"/>
     <pathelement location="build/classes" />
     <fileset dir="../lib">
+      <include name="junit-patch.jar"/>
       <include name="**/*.jar" />
       <exclude name="**/kristinaanderic-kernal.jar" />
     </fileset>
@@ -12,6 +15,7 @@
 
   <target name="prepare">
     <mkdir dir="build/classes" />
+    <mkdir dir="build/test" />
   </target>
 
   <target name="compile" depends="prepare">
@@ -23,10 +27,9 @@
     </javac>
     <copy todir="build/classes">
       <fileset dir="src">
-        <include name="**/*.xml" />
+        <include name="**/*.hbm.xml"/>
       </fileset>
     </copy>
-    <copy file="conf/hibernate.cfg.xml" todir="build/classes" />
   </target>
 
   <target name="deploy" depends="compile">
@@ -92,6 +95,32 @@
 
   <target name="clean">
     <delete dir="build" />
+  </target>
+
+  <target name="test-compile" depends="prepare">
+    <javac srcdir="test"
+           destdir="build/test"
+           debug="on"
+           deprecation="on"
+	   includes="**/PartyTester.java">
+      <classpath refid="class.path" />
+    </javac>
+  </target>
+
+  <!-- just do party for now until i get it working -->
+  <target name="test">
+    <junit fork="yes" haltonfailure="yes" printsummary="yes">
+      <classpath>
+        <pathelement location="build/test"/>
+	<path refid="class.path"/>
+      </classpath>
+      <batchtest>
+        <fileset dir="build/test">
+	  <include name="**/*Tester.class"/>
+	</fileset>
+	<formatter usefile="no" type="plain"/>
+      </batchtest>
+    </junit>
   </target>
 
 </project>

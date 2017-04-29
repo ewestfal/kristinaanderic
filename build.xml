@@ -1,5 +1,7 @@
 <project name="kristinaanderic.com" default="deployRemote" basedir=".">
 
+  <property file="./build.properties" />
+
   <property name="ftp.server" value="krisanderic.kgbinternet.com" />
   <property name="ftp.port" value="21" />
   <property name="account.username" value="krisanderic" />
@@ -9,8 +11,6 @@
   <property name="build.war.unpack" value="${build.path}/war-unpack" />
   <property name="webapp.path" value="web/wedding" />
   <property name="webapp.deploy.path" value="C:\Program Files\Apache Group\Tomcat 4.1\webapps" />
-
-  <property file="./build.properties" />
 
   <path id="project.classpath">
     <fileset dir="lib">
@@ -65,10 +65,19 @@
   </target>
 
   <target name="bundle-webapp" depends="prepare,build-web">
+    <copy todir="web/build/classes">
+      <fileset dir="web/src">
+        <include name="**/*.properties" />
+      </fileset>
+      <fileset dir="kernel/conf">
+        <include name="*Context.xml"/>
+      </fileset>
+    </copy>
     <war destfile="${build.war.path}/wedding.war"
          webxml="${webapp.path}/WEB-INF/web.xml"
          basedir="${webapp.path}">
       <classes dir="web/build/classes" />
+      <lib dir="lib" />
     </war>
   </target>
 
