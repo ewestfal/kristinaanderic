@@ -1,0 +1,99 @@
+body {
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 1px;
+    margin-left: 2px;
+    margin-right: 0px;
+}
+
+.container {
+position: relative;
+width: 775px;
+/*
+    border-style: solid;
+    border-color:black;
+    border-width: 1px;
+*/
+}
+
+.topbar {
+    text-align: center;
+    margin-top: 35px;
+    margin-left: 50px;
+    height: 130px;
+width: 700px;
+    background-image: url(images/romance2.jpg);
+    background-repeat: repeat-x;
+    border-style: solid;
+    border-color:black;
+    border-width: 1px;
+}
+
+.tableClass {
+    display: table;
+    top: 50px;
+    left: 50px;
+}
+
+.bodyRow {
+    display: table-row;
+}
+
+.sidebar {
+position: relative;
+display: inline;
+float: left;
+    margin-left: 35px;
+height: 100%;
+    width: 130px;
+    background-color: #C57A7A;
+/*
+border-style: solid;
+    border-color:black;
+    border-width: 1px;
+*/
+}
+
+.titleImage {
+position: relative;
+left: 20px;
+}
+
+.thebody {
+    text-align: left;
+margin-left: 5px;
+margin-top: 15px;
+    width: 570px;
+    display: inline;
+font-size: 16px;
+font-weight: normal;
+font-family: arial, times, sans-serif;
+/*
+border-style: solid;
+    border-color:black;
+    border-width: 1px;
+*/
+}
+
+.weddingDate {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.menuItem {
+  margin-top: 5px;
+  margin-left: 5px;
+  font-family: Verdana, times, sans-serif;
+      font-size: 16px;
+  
+}
+
+.pictureCircle {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 10;
+}
+
+

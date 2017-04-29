@@ -1,0 +1,85 @@
+<project name="kristinaanderic.com" default="deployRemote" basedir=".">
+
+  <property name="ftp.server" value="krisanderic.kgbinternet.com" />
+  <property name="ftp.port" value="21" />
+  <property name="account.username" value="krisanderic" />
+  <property name="account.password" value="..." />
+  <property name="build.path" value="build" />
+  <property name="build.war.path" value="${build.path}/war" />
+  <property name="build.war.unpack" value="${build.path}/war-unpack" />
+  <property name="webapp.path" value="web/wedding" />
+  <property name="webapp.deploy.path" value="C:\Program Files\Apache Group\Tomcat 4.1\webapps" />
+
+  <property file="./build.properties" />
+
+  <path id="project.classpath">
+    <fileset dir="lib">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+    
+  <path id="project.webclasspath">
+    <path refid="project.classpath" />
+    <fileset dir="web/lib">
+      <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="web/wedding/WEB-INF/lib">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+  <target name="prepare">
+    <mkdir dir="${build.war.path}" />
+    <mkdir dir="${build.war.unpack}" />
+    <mkdir dir="web/build/classes" />
+  </target>
+
+  <target name="clean">
+    <delete dir="web/build" />
+  </target>
+
+  <target name="deployRemote" depends="web">
+    <unwar src="${build.war.path}/wedding.war"
+           dest="${build.war.unpack}"
+           overwrite="false" />
+    <ftp action="put"
+         remotedir="jakarta-tomcat/webapps/wedding"
+         server="${ftp.server}"
+         port="${ftp.port}"
+         userid="${account.username}"
+         password="${account.password}"
+         depends="yes"
+         ignoreNoncriticalErrors="true">
+      <fileset dir="${build.war.unpack}" />
+    </ftp>
+  </target>
+
+  <target name="deploy" depends="web">
+    <unwar src="${build.war.path}/wedding.war"
+           dest="${webapp.deploy.path}/wedding"
+           overwrite="false" />
+  </target>
+
+  <target name="web">
+    <antcall target="bundle-webapp" />
+  </target>
+
+  <target name="bundle-webapp" depends="prepare,build-web">
+    <war destfile="${build.war.path}/wedding.war"
+         webxml="${webapp.path}/WEB-INF/web.xml"
+         basedir="${webapp.path}">
+      <classes dir="web/build/classes" />
+    </war>
+  </target>
+
+  <target name="build-web" depends="prepare">
+    <javac srcdir="web/src"
+           destdir="web/build/classes"
+           debug="on"
+           optimize="on"
+           deprecation="on">
+      <classpath refid="project.webclasspath" />
+    </javac>
+  </target>
+
+</project>

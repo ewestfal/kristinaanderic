@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.kristinaanderic.guests.Party" table="parties">        
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="partyName" type="string" />
+        <many-to-one name="contactInformation" column="contactInformationId" 
+        	cascade="all" />
+        <many-to-one name="rsvp" column="rsvpId" cascade="all" />
+        <list name="names" table="party_name_rel" cascade="all">
+          <key column="partyId" />
+          <index column="idx" type="integer" />
+          <many-to-many column="nameId" class="com.kristinaanderic.util.Name" />
+        </list>
+    </class>
+
+</hibernate-mapping>

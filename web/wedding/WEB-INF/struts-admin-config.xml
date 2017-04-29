@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+
+  <form-beans>
+
+    <!-- Login form bean -->
+    <form-bean name="loginForm"
+               type="org.apache.struts.validator.DynaValidatorForm">
+      <form-property name="username" type="java.lang.String"/>
+      <form-property name="password" type="java.lang.String"/>
+    </form-bean>
+
+  </form-beans>
+
+  <!-- =========== Global Forward Definitions ============================= -->
+
+  <global-forwards>
+
+    <!-- Default forward to "Welcome" action -->
+    <forward name="/welcome" path="/Welcome.do"/>
+    <forward name="/error" path="/StrutsError.jsp" />
+
+  </global-forwards>
+
+
+  <!-- ========== Action Mapping Definitions ============================== -->
+  <action-mappings>
+
+    <action path="/login" forward="/Login.jsp" />
+    <action path="/editGuestList" forward="/EditGuestList.jsp" />
+    <action path="/addParty" forward="/EditParty.jsp" />
+    <action path="/editParty" forward="/EditParty.jsp" />
+
+    <action path="/Welcome" forward="/Login.jsp" />
+
+    <action path="/Login"
+            type="com.kristinaanderic.web.admin.LoginAction"
+            name="loginForm"
+            scope="request"
+            validate="false">
+      <forward name="success" path="/AdministratorHome.jsp" />
+      <forward name="failure" path="/login.do" />
+    </action>
+
+    <action path="/EditGuestList" 
+            type="com.kristinaanderic.web.admin.EditGuestListAction">
+      <forward name="success" path="/editGuestList.do" />
+    </action>
+
+    <action path="/AddParty" forward="/addParty.do" />
+    <action path="/EditParty" forward="/editParty.do" />
+
+    <action path="/UpdateParty" forward="/../comingsoon.jsp" />
+            
+<!--
+    <action path="/ManageMessages"
+            type="com.lifetree.web.administrator.ManageMessagesAction">
+      <forward name="success" path="/administrator/ManageMessages.jsp" />
+    </action>
+    
+    <action path="/MarkMessageRead"
+            type="com.lifetree.web.administrator.MarkMessageReadAction">
+       <forward name="success" path="/ManageMessages.do" />
+    </action>
+
+    <action path="/ManagePersistableLocks"
+            type="com.lifetree.web.administrator.ManagePersistableLocksAction">
+       <forward name="success" path="/administrator/ManagePersistableLocks.jsp" />
+    </action>
+
+    <action path="/ReleasePersistableLock"
+            type="com.lifetree.web.administrator.ReleasePersistableLockAction">
+      <forward name="success" path="/ManagePersistableLocks.do" />
+    </action>
+
+    <action path="/ManagePharmacies"
+            type="com.lifetree.web.administrator.ManagePharmaciesAction">
+      <forward name="success" path="/administrator/ManagePharmacies.jsp" />
+    </action>
+
+    <action path="/AddPharmacy"
+            type="com.lifetree.web.administrator.AddPharmacyAction">
+      <forward name="success" path="/administrator/EditPharmacy.jsp" />
+    </action>
+
+    <action path="/EditPharmacy"
+            type="com.lifetree.web.administrator.EditPharmacyAction">
+      <forward name="success" path="/administrator/EditPharmacy.jsp" />
+    </action>
+
+
+    <action path="/UpdatePharmacy"
+            type="com.lifetree.web.administrator.UpdatePharmacyAction"
+            name="pharmacyForm"
+            scope="request"
+            input="/administrator/EditPharmacy.jsp"
+            validate="true">
+      <forward name="success" path="/ManagePharmacies.do" />
+    </action>
+
+    <action path="/ManageLifeTreeStaff"
+            type="com.lifetree.web.administrator.ManageLifeTreeStaffAction">
+      <forward name="success" path="/administrator/ManageLifeTreeStaff.jsp" />
+    </action>
+
+    <action path="/AddLifeTreeStaff"
+            type="com.lifetree.web.administrator.AddLifeTreeStaffAction">
+      <forward name="success" path="/administrator/EditLifeTreeStaff.jsp" />
+    </action>
+
+    <action path="/EditLifeTreeStaff"
+            type="com.lifetree.web.administrator.EditLifeTreeStaffAction">
+      <forward name="success" path="/administrator/EditLifeTreeStaff.jsp" />
+    </action>
+
+    <action path="/UpdateLifeTreeStaff"
+            type="com.lifetree.web.administrator.UpdateLifeTreeStaffAction"
+            name="lifeTreeStaffForm"
+            scope="request"
+            input="/administrator/EditLifeTreeStaff.jsp"
+            validate="true">
+      <forward name="success" path="/ManageLifeTreeStaff.do" />
+    </action>
+
+
+    <action path='/SubmitAddPatient'
+            type='com.lifetree.web.administrator.SubmitAddPatientAction'
+            name='addPatientForm'
+            scope='request'
+            input='/administrator/AddPatient.jsp'
+            validate='true'>
+      <forward name='success' path='/administrator/AddPatient.jsp' />
+    </action>
+
+    <action path="/EditPractices"
+            type="com.lifetree.web.administrator.EditPracticesAction">
+      <forward name="success" path="/administrator/EditPractices.jsp" />
+    </action>
+
+    <action path="/OpenPractice"
+            type="com.lifetree.web.administrator.OpenPracticeAction"
+            name="openPracticeForm"
+            scope="request"
+            input="/administrator/EditPractices.jsp"
+            validate="true">
+      <forward name="success" path="/administrator/DisplayPractice.jsp" />
+    </action>
+
+    <action path="/EditPracticeInformation"
+            type="com.lifetree.web.administrator.EditPracticeInformationAction"
+            name="editPracticeForm"
+            scope="request"
+            input="/administrator/DisplayPractice.jsp"
+            validate="true" >
+       <forward name="success" path="/administrator/EditPractice.jsp" />
+    </action>
+
+    <action path="/CreatePractice"
+            type="com.lifetree.web.administrator.CreatePracticeAction" >
+      <forward name="success" path="/administrator/EditPractice.jsp" />
+    </action>
+
+    <action path="/UpdatePracticeInformation"
+            type="com.lifetree.web.administrator.UpdatePracticeInformationAction"
+            name="practiceInformationForm"
+            scope="request"
+            input="/administrator/EditPractice.jsp"
+            validate="true">
+      <forward name="success" path="/administrator/DisplayPractice.jsp" />
+    </action>
+
+    <action path="/EditPracticeAdministrator"
+            type="com.lifetree.web.administrator.EditPracticeAdministratorAction"
+            name="editPracticeAdministratorForm"
+            scope="request"
+            input="/administrator/DisplayPractice.jsp"
+            validate="true" >
+       <forward name="success" path="/administrator/EditPracticeAdministrator.jsp" />
+    </action>
+
+    <action path="/UpdatePracticeAdministrator"
+            type="com.lifetree.web.administrator.UpdatePracticeAdministratorAction"
+            name="practiceAdministratorForm"
+            scope="request"
+            input="/administrator/EditPracticeAdministrator.jsp"
+            validate="true">
+      <forward name="success" path="/administrator/DisplayPractice.jsp" />
+    </action>
+-->
+  </action-mappings>
+
+  <!-- ========== Controller Configuration ================================ -->
+
+  <controller>
+    <!-- The "input" parameter on "action" elements is the name of a
+         local or global "forward" rather than a module-relative path --> 
+    <set-property property="inputForward" value="true"/>
+  </controller>
+
+  <!-- ========== Message Resources Definitions =========================== -->
+
+  <message-resources
+    parameter="com.kristinaanderic.web.resources.ApplicationResources"
+    null="false" />
+
+  <!-- ========== Plug Ins Configuration ================================== -->
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property property="pathnames"
+                     value="/WEB-INF/validator-rules.xml,
+                            /WEB-INF/validation.xml"/>
+  </plug-in>
+
+</struts-config>

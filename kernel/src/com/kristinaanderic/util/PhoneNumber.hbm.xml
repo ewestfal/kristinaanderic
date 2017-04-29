@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.kristinaanderic.util.PhoneNumber" table="phoneNumbers">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="areaCode" type="string" />
+        <property name="prefix" type="string" />
+        <property name="postfix" type="string" />
+        <property name="extension" type="string" />
+        <property name="type" type="com.kristinaanderic.util.PhoneNumberType" />
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,97 @@
+<project name="kernel" default="compile" basedir=".">
+
+  <property file="../build.properties" />
+
+  <path id="class.path">
+    <pathelement location="build/classes" />
+    <fileset dir="../lib">
+      <include name="**/*.jar" />
+      <exclude name="**/kristinaanderic-kernal.jar" />
+    </fileset>
+  </path>
+
+  <target name="prepare">
+    <mkdir dir="build/classes" />
+  </target>
+
+  <target name="compile" depends="prepare">
+    <javac srcdir="src"
+           destdir="build/classes"
+           debug="on"
+           deprecation="on">
+      <classpath refid="class.path" />
+    </javac>
+    <copy todir="build/classes">
+      <fileset dir="src">
+        <include name="**/*.xml" />
+      </fileset>
+    </copy>
+    <copy file="conf/hibernate.cfg.xml" todir="build/classes" />
+  </target>
+
+  <target name="deploy" depends="compile">
+    <jar destfile="../lib/kristinaanderic-kernel.jar"
+         basedir="build/classes"
+         index="true" />
+  </target>
+
+  <target name="schemaexport" depends="compile">
+    <taskdef name="schemaexport"
+             classname="net.sf.hibernate.tool.hbm2ddl.SchemaExportTask"
+             classpathref="class.path">
+    </taskdef>
+    <schemaexport
+        properties="conf/hibernate.properties"
+        quiet="no"
+        text="no"
+        drop="no"
+        delimiter=";"
+        output="sql/schema-export.sql">
+        <fileset dir="build/classes">
+          <include name="**/*.hbm.xml" />
+        </fileset>
+     </schemaexport>
+  </target>
+
+  <target name="schemaexport2" depends="compile">
+    <java classname="net.sf.hibernate.tool.hbm2ddl.SchemaExport"
+          classpathref="class.path" fork="yes">
+      <arg value="--delimeter=;"/>
+      <arg value="--format"/>
+      <arg value="--output=sql/schema-export.sql"/>
+      <arg value="--config=hibernate.cfg.xml"/>
+    </java>
+  </target>
+
+  <target name="schemaexport4" depends="compile">
+    <path id="mapping.files">
+      <fileset dir="build/classes">
+        <include name="**/*.hbm.xml" />
+      </fileset>
+    </path>
+    <pathconvert refid="mapping.files" property="mappings" pathsep=" " />
+    <java classname="net.sf.hibernate.tool.hbm2ddl.SchemaExport"
+          fork="yes">
+      <arg value="--delimeter=;"/>
+      <arg value="--format"/>
+      <arg value="--output=sql/schema-export.sql"/>
+      <arg line="${mappings}" />
+      <jvmarg value="-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect"/>
+      <jvmarg value="-Dhibernate.connection.driver_class=com.mysql.jdbc.Driver"/>
+      <jvmarg value="-Dhibernate.connection.url=jdbc:mysql://localhost/krisanderic"/>
+      <jvmarg value="-Dhibernate.connection.username=krisanderic"/>
+      <jvmarg value="-Dhibernate.connection.password=..."/>
+      <classpath>
+        <pathelement location="build/classes" />
+        <fileset dir="../lib">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="clean">
+    <delete dir="build" />
+  </target>
+
+</project>

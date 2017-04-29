@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.kristinaanderic.util.ContactInformation" table="contact_info">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="address" column="addressId" cascade="all" />
+        <list name="phoneNumbers" table="contact_info_phone_rel" cascade="all">
+          <key column="contactInfoId" />
+          <index column="idx" type="integer" />
+          <many-to-many column="phoneNumberId" class="com.kristinaanderic.util.PhoneNumber" />
+        </list>
+    </class>
+
+</hibernate-mapping>

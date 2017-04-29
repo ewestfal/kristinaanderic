@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Object Mapping DTD Version 1.0//EN"
+                         "http://castor.exolab.org/mapping.dtd">
+<mapping>
+
+    <class name="com.kristinaanderic.accounts.UserAccount" identity="id">
+
+        <map-to table="accounts" />
+
+        <field name="id" type="integer">
+            <sql name="id" type="integer" />
+        </field>
+
+        <field name="userName" type="string">
+            <sql name="userName" type="char" />
+        </field>
+
+        <field name="password" type="string">
+            <sql name="password" type="char" />
+        </field>
+
+        <field name="party" type="com.kristinaanderic.guests.Party" >
+            <sql name="partyId" />
+        </field>
+
+    </class>
+
+    <class name="com.kristinaanderic.guests.Party" identity="id">
+
+        <map-to table="parties" />
+
+        <field name="id" type="integer">
+            <sql name="id" type="integer" />
+        </field>
+
+        <field name="names" type="com.kristinaanderic.util.Name" 
+               collection="arraylist">
+            <sql name="userName" type="char" />
+        </field>
+
+    </class>
+
+    <class name="com.kristinaanderic.util.Name" identity="id">
+    
+         <map-to table="names" />
+         
+         <field name="id" type="integer">
+            <sql name="id" type="integer" />
+        </field>
+
+        <field name="firstName" type="string">
+            <sql name="firstName" type="char" />
+        </field>
+
+        <field name="middleName" type="string">
+            <sql name="middleName" type="char" />
+        </field>
+
+        <field name="lastName" type="string">
+            <sql name="lastName" type="char" />
+        </field>
+
+</mapping>
