@@ -1,6 +1,6 @@
 This is the old project I built to create the website for Kristina and my wedding back on October 30, 2004.
 
-The website was http://www.kristinaanderic.come
+The website was http://www.kristinaanderic.com
 
 I think it was hosted at http://www.kgbinternet.com/ which somehow still appears to be a company (though their website looks straight out of the 90's).
 
